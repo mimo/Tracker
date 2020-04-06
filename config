@@ -1,0 +1,5 @@
+# Change the values according to your installation
+
+RAYLIB_PATH="$HOME/.local/lib"
+RAYLIB_ADA_PATH="../raylib"
+EDITOR=${EDITOR:-"atom"}

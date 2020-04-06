@@ -1,0 +1,14 @@
+with "raylib";
+
+project tracker is
+
+  for source_dirs use (".");
+  for main use ("tracker.adb");
+
+  RAYLIB_PATH := "-L" & external("RAYLIB_PATH", "/usr/local/lib");
+
+  package Linker is
+    for Default_Switches ("ada") use ("-lraylib", RAYLIB_PATH, "-g");
+  end Linker;
+
+end tracker;

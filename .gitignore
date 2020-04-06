@@ -1,5 +1,10 @@
+tracker
+
 # Object file
 *.o
+*std*
+b_*
+*.bexch
 
 # Ada Library Information
 *.ali
