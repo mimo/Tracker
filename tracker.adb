@@ -1,66 +1,44 @@
 with Ada.Strings.Fixed;
-with raylib.UI;
 
-procedure tracker is
+package body tracker is
 
-   type views is (collections, stats);
-   view : views := collections;
-   procedure switch_view is
+   procedure Percentage (Object : in out Collection) is
    begin
-      view := (if view = views'Last
-               then views'First
-               else views'Succ (view));
-   end switch_view;
+     for I in Fixed_Collection'First .. Fixed_Collection'First + Object.Items_Count - 1 loop
+        Object.Counter (Object.Items(I).state) := Object.Counter(Object.Items(I).state) + 1;
+     end loop;
+   end Percentage;
 
-   type collection is
-   record
-      name : String (1 .. 40);
-   end record;
+   procedure Set_Name (Object : in out Collection; Name : String) is
+   begin
+      Ada.Strings.Fixed.Move (Name, Object.Name);
+   end Set_Name;
 
-   type board_size is new Natural range 0 .. 12;
-   type collection_list is array (1 .. board_size'Last) of collection;
-   type board_type is
-   record
-      elements : collection_list;
-      size : board_size := 0;
-   end record;
-   board : board_type;
+   procedure Add_Item (Object : in out Collection ; Name : String ; S : Item_Status := UNSTARTED) is
+      New_Item : Item;
+   begin
+      New_Item.state := S;
+      Ada.Strings.Fixed.Move (Name, New_Item.name);
+      New_Item.name_length := Integer'Min  (Name'Length, New_Item.name'Length);
 
-   height : Float := 0.0;
-begin
-   raylib.window.init (500, 500, "tracker");
+      Object.Items (Object.Items'First + Object.Items_Count) := New_Item;
+      Object.Items_Count := Object.Items_Count + 1;
+   end Add_Item;
 
-   while not raylib.window.should_close loop
-      if raylib.core.is_key_pressed (raylib.KEY_TAB) then
-         switch_view;
-      end if;
+   procedure Move_Up   (Object : in out Collection ; Item : Integer) is
+   begin
+      null;
+   end Move_Up;
 
-      raylib.begin_drawing;
-      raylib.clear_background (raylib.RAYWHITE);
+   procedure Move_Down (Object : in out Collection ; Item : Integer) is
+   begin
+      null;
+   end Move_Down;
 
-      case view is
-      when collections =>
-         raylib.UI.statusbar ((0.0, 0.0, 500.0, 32.0), "Collections");
-         if raylib.UI.button ((10.0, 40.0, 80.0, 24.0), "Ajouter")
-            and then board.size < board_size'Last
-         then
-            board.size := board.size + 1;
-            Ada.Strings.Fixed.Move (
-               "COLLECTION" & board.size'Img,
-               board.elements (board.size).name);
-         end if;
+   procedure Add_Collection (Object : in out Board; Col : Collection) is
+   begin
+      Object.Collections (Object.Collections'First + Object.Collection_Count) := Col;
+      Object.Collection_Count := Object.Collection_Count + 1;
+   end Add_Collection;
 
-         for I in 1 .. board.size loop
-            height := 32.0  + 16.0 + 24.0 + Float (I - 1) * 30.0;
-            raylib.UI.statusbar (
-               bounds => (10.0, height, 200.0, 25.0),
-               text => board.elements (I).name);
-         end loop;
-      when stats =>
-         raylib.UI.statusbar ((0.0, 0.0, 500.0, 32.0), "Stats");
-      end case;
-      raylib.end_drawing;
-   end loop;
-
-   raylib.window.close;
 end tracker;

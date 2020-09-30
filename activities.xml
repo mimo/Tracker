@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<collections>
+   <activity focus="true">
+      <name>LEARNING BOOK</name>
+      <item state="progress">Chapter 1</item>
+      <item state="unstarted">Chapter 2</item>
+      <item state="unstarted">Chapter 3</item>
+   </activity>
+   <activity>
+      <name>PROJECT</name>
+      <item state="unstarted">ANALYSIS</item>
+      <item state="unstarted">STUDY</item>
+      <item state="unstarted">PRODUCT</item>
+   </activity>
+   <activity focus="false">
+      <name>COURSES</name>
+      <item state="progress">Chapter 1</item>
+      <item state="unstarted">Chapter 2</item>
+      <item state="unstarted">Chapter 3</item>
+   </activity>
+   <habits>
+      <name>PRATICE</name>
+      <completed on="20200924" />
+      <completed on="20200930" />
+   </habits>
+</collections>
